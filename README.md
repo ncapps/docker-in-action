@@ -10,5 +10,16 @@
 - Docker works with the greater container ecosystem; that ecosystem is rich with tooling that solves new and higher-level problems
 - `docker help` to get a description of all the docker commands
 
+### Chapter 2. Running software in containers
+- Containers can be run with virtual terminals attached to the user's shell or in detached mode
+- By default, every Docker container has its own PID namespace, isolating process information for each container
+- Docker identifies every container by its generated container id, abbeviated container id, or it's human-friendly name
+- All containers are in any one of six distinct states: created, running, restarting, paused, removing, or exited
+- The `docker exec` command can be used to run additional processes inside a running container
+- A user can pass input or provide additional configuration to a process in a container by specifying environment variables at container-creation time
+- Using the `--read-only` flag at container-creation time will mount the container filesystem as read-only and prevent specialization of the container
+- A container restart policy, set with the `--restart` flag at container-creation time, will help your systems automatically recover in the event of a failure
+- Docker makes cleaning up containers with the `docker rm` command as simple as creating them
+
 ## Attribution
 Docker in Action, Second Edition by Stephen Kuenzli, Jeffrey Nickoloff, Manning Publications, 2019
