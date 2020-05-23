@@ -21,5 +21,17 @@
 - A container restart policy, set with the `--restart` flag at container-creation time, will help your systems automatically recover in the event of a failure
 - Docker makes cleaning up containers with the `docker rm` command as simple as creating them
 
+### Chapter 3. Software installation simplified
+- Human users of Docker use repository names to communicate which software they would like Docker to install
+- Docker Hub is the default Docker registry.
+- The `docker` CLI makes it simple to install software that's distributed through alternative registries, TAR archives, or Dockerfiles
+- The image repository specification includes a registry host field
+- The `docker load` and `docker save` commands can be used to load and save images from TAR archives
+- Distributing a Dockerfile with a project simplifies image builds on user machines
+- Images are usually related to other images in parent/child relationships. These relationships form layers. When we install an image, we have installed a target image and each image layer in its lineage
+- Structuring images with layers enables layer reuse and save bandwidth during distribution and storage space on your computer and image distribution servers
+
+
+
 ## Attribution
 Docker in Action, Second Edition by Stephen Kuenzli, Jeffrey Nickoloff, Manning Publications, 2019
