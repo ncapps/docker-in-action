@@ -95,5 +95,43 @@
 - The capabilities granted to any container can be set with the `--cap-add` and `--cap-drop` flags
 - Docker provides tooling for integrating easily with enhanced isolation technologies such as seccomp, SELinux, and AppArmor. These are powerful security tools.
 
+### Chapter 7. Packaging software in images
+- `docker container diff` shows you all the filesystem changes that have been made inside a container
+- `docker container commit` creates an image from a modified container. `-a` signs the image with an author string. `-m` sets a commit message. This commits a new layer to an image.
+- An *entrypoint* is the program that will be executed when the container starts
+- Use the `--entrypoint` flag to set the entrypoint
+- The root filesystem is provided by the image that the container was started from. That filesystem is implemented with a union filesystem.
+- A union filesystem is made up of layers. Each time a change is made to a union filesystem, that change is recorded on a new layer on top of all of the others. The *union* of all those layers, or top-down view, is what the container sees when accessing the filesystem
+- Union filesystems **copy-on-change**
+- A *repository* is roughly defined as a named bucket of images. More specifically, repositories are location/name pairs that point to a set of specific layer identifiers
+- Repository name = REGISTRY_HOST/USER_NAME/SHORT_NAME
+- Eaach repository contains at least one tag that points to a specific layer identifier
+- If you pull a repository without specifying a tag, Docker will try to pull an image tagged with `latest`.
+- You can pull all tagged images in a repository by adding the `--all-tags` option
+- Repositories and tags are created with the `docker tag`, `docker commit`, or `docker build` commands
+- If you want to copy an image, you need only to create a new tag or repository from the existing one
+- Every repository contains a `latest` tag by default. That will be used if the tag is omitted
+- `docker image history` examine all the layers in an image
+- You can flatten images by saving the image to a TAR file with `docker image save`, and then importing the contents of that filesystem back into Docker with `docker image import`.
+    - That's a bad idea because you lose the original image's metadata, it's change history, and any savings customers might get when they download images with the same lower levels
+- Create image branches using Dockerfiles to manage image size
+- `docker container export` will stream the full contents of the flattened union filesystem to stdout or an output file as a tarball
+- `docker import` will stream the content of a tarball into a new image
+- Statically linked programs have not external file dependencies at runtime. This means this statically linked version of "Hello, World" can run in a container with no other files.
+- The understanding that every repository contains multiple tags and that multiple tags can reference the same image is at the core of a pragmatic tagging scheme
+- A repository maintainer should always make sure that its repository's `latest` refers to the latest *stable* build of its software instead of the true latest
+- When software dependencies change, or the software needs to be distributed on top of multiple bases, then those dependencies should be included with your tagging scheme
+**Summary**
+- New images are created when changes to a container are committed using the `docker container commit` command
+- When a container is committed, the configuration it was started with will be encoded into the configuration for the resulting image
+- An image is a stack of layers that's identified by it's top layer
+- An image's size on disk is the sum of the sizes of its component layers
+- Images can be exported to and imported from a flat tarball representation by using the `docker container export` and `docker image import` commands
+- The `docker image tag` command can be used to assign several tags to a single repository
+- Repository maintainers should keep pragmatic tags to ease user adoption and migration control
+- Tag your latest *stable* build with the `latest` tag
+- Provide fine-grained and overlapping tags so that adopters have control of the scope of their dependency version creep
+
+
 ## Attribution
 Docker in Action, Second Edition by Stephen Kuenzli, Jeffrey Nickoloff, Manning Publications, 2019
