@@ -83,6 +83,17 @@
 - The network-name resolution stack can be customized for each container. Custom DNS servers, search domains, and static hosts can be defined
 - Network management can be externalized with third-party tooling and by using the Docker `none` network
 
+### Chapter 6. Limiting risk with resource controls
+- A *context switch* is the task of changing from executing one process to executing another. Context switching is expensive and may cause a noticeable impact on performance of the system.
+-  The linux user database is stored in a file located at /etc/passwd
+- Docker uses `cgroups`, which let a user set memory limits, CPU weight & limits, and core restrictions as well as restrict access to specific devices
+- Docker containers each have their own IPC namespace that can be shared with other containers or the host in order to facilitate communcation over shared memory
+- Docker supports isolating the USR namespace. By default , user and group IDs inside a container are equivalent to the same IDs on the host machine. When the user namespace is enabled, user and group IDs in the container are remapped to IDs that do not exist on the host.
+- You can and should use the `-u` option on `docker container run` and `docker container create` to run containers as nonroot users
+- Avoid running containers in privileged mode whenever possible
+- Linux capabilities provide operating system feature authorization. Docker drops certain capabilities in order to provide reasonably isolating defaults.
+- The capabilities granted to any container can be set with the `--cap-add` and `--cap-drop` flags
+- Docker provides tooling for integrating easily with enhanced isolation technologies such as seccomp, SELinux, and AppArmor. These are powerful security tools.
 
 ## Attribution
 Docker in Action, Second Edition by Stephen Kuenzli, Jeffrey Nickoloff, Manning Publications, 2019
