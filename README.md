@@ -132,6 +132,45 @@
 - Tag your latest *stable* build with the `latest` tag
 - Provide fine-grained and overlapping tags so that adopters have control of the scope of their dependency version creep
 
+### Chapter 8. Building images automatically with Dockerfiles
+- A *Dockerfile* is a text file that contains instructions for building an image
+- Once an image's build is defined in code, it is simple to track changes in version control
+- The only special rule about Dockerfiles is that the first instruction must be `FROM`
+- `docker image build` Build an image from a Dockerfile
+- A new image layer is created for each instruction in a Dockerfile
+- The `ENTRYPOINT` instruction has two forms: shell and exec
+- Using the exec (string array) form wherever possible is the best practice
+- You cannot specify a bint-mount volume or read-only volume at image build time
+- The `CMD` command represents an argument list for the entrypoint
+- The `ONBUILD` instruction defines other instructions to execute if the resulting image is used as a base for another build
+- You provide build arguments to the `docker image build` command by using one or more `--build-arg <varname>=<value>` options
+- A *multistage Dockerfile* is a Dockerfile that has multiple `FROM` instructions
+- Init processes typically use a file or a set of files to describe the ideal state of the initialized system
+- Using an init process is a best practice for application containers
+- The `--init` option can be used to run an init process inside the container
+- You can use the `HEALTHCHECK` instruction to specify the health check command
+- Image authors should define a useful health check in images where possible
+
+**Summary**
+- Docker provides an automated image builder that reads instructions from Dockerfiles
+- Each Dockerfile instruction results in the creation of a single image layer
+- Merge instructions it minimize the size of images and layer count when possible
+- Dockerfiles include instructions to set image metadata including the default user, exposed ports, default command, and entrypoint
+- Other Dockerfile instructions copy files from the local filesystem or a remote location into the produced images
+- Downstream builds inherit build triggers that are set with `ONBUILD` instructions in an upstream Dockerfile
+- Dockerfile maintenance can be improved with multistage builds and the `ARG` instruction
+- Startup scripts should be used to validate the execution context of a container before launching the primary application
+- A valid execution context should have appropriate environment variables set, network dependencies available, and an appropriate user configuration
+- Init programs can be used to launch multiple processes, monitor those processes, reap orphaned child processes, and forward signals to child processes
+- Images should be hardened by building from content-addressable image identifiers, creating a nonroot default user, and disabling or removing any executable with SUID and GUID permissions
+
+### Chapter. 9 Public and private software distribution
+- Some systems might abandon the image as the distribution unit altogether and distribute the source files for images instead
+- Hosted public repositories provide excellent project visibility, are free, and require little experience to adopt
+- Hosted private repositories are cost-effective for small teams and provide satisfactory control
+- Running your own registry enabled you to build infrastructure suitable for special use cases without abandoning the Docker distribution facilities
+- Distributing images as files can be accomplished with any file-sharing system
+
 
 ## Attribution
 Docker in Action, Second Edition by Stephen Kuenzli, Jeffrey Nickoloff, Manning Publications, 2019
